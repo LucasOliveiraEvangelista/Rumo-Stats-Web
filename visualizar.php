@@ -34,7 +34,7 @@
             echo "Número da camisa: #" . $dados['numero'] . "<br>";
             echo "Perna boa: " . $dados['pe'] . "<br>";
             echo "Nacionalidade: " . $selecao['nome'] . "<br>";
-            echo "<a href='visualizar.php?id=" . $dados['id_jogador'] . "'>Visualizar</a><br>";
+            echo "<a href='temporadas.php?id=" . $dados['id_jogador'] . "'>Histórico da Carreira</a><br>";
             echo "<a href='adicionar.php?id=" . $dados['id_jogador'] . "'>+ Adicionar Temporada</a><br>";
             echo "<a href='editar.php?idj=" . $dados['id_jogador'] . "'>Editar</a><br>";
             echo "<a href='apagar.php?id=" . $dados['id_jogador'] . "'>Apagar</a><br>";
