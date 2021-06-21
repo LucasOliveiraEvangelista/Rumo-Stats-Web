@@ -3,7 +3,7 @@ class Conn {
     public static $host = "localhost";
     public static $usuario = "root";
     public static $senha = "lcs_160803";
-    public static $banco = "pdoteste";
+    public static $banco = "rumostats";
     private static $Connect = null;
     
     private static function Conectar() {

@@ -6,10 +6,13 @@
     </head>
     <body>
         <h1>Cadastrar jogadores</h1>
-        <a href="listar.php">Listar</a><br><br>
-        <a href="top_players.php">Top players</a><br><br>
+        <a href="visualizar.php">Meus Jogadores</a><br><br>
 		<?php
         require_once 'conexao.php';
+        session_start();
+        // print_r($_SESSION);
+
+        $id = $_SESSION['id'];
 
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 		
@@ -18,21 +21,23 @@
 			
             $conexao = new Conn();
 
-            $query = "INSERT INTO jogadores (nome, numero, posicao, selecao) 
-			VALUES (:nome, :numero, :posicao, :selecao)";
+            $query = "INSERT INTO jogadores (nome, numero, posicao, selecao, pe, id_user) 
+			VALUES (:nome, :numero, :posicao, :selecao, :pe, :id)";
             $cadastrar = $conexao->getConn()->prepare($query);
 
             $cadastrar->bindParam(':nome', $dados['nome'], PDO::PARAM_STR);
             $cadastrar->bindParam(':numero', $dados['numero'], PDO::PARAM_INT);
             $cadastrar->bindParam(':posicao', $dados['posicao'], PDO::PARAM_STR);
+            $cadastrar->bindParam(':pe', $dados['pe'], PDO::PARAM_STR);
             $cadastrar->bindParam(':selecao', $dados['selecao'], PDO::PARAM_INT);
-
+            $cadastrar->bindParam(':id', $id, PDO::PARAM_INT);
+            
             $cadastrar->execute();
 			
             if ($cadastrar->rowCount()){
                 echo "<script>alert('Dados inseridos com sucesso'); location.href='index.php'</script>";
 			}else{
-				echo "<script>alert('Deu merda com sucesso'); location.href='index.php'</script>";
+				echo "<script>alert('Erro ao cadatrar jogador'); location.href='index.php'</script>";
 			}
         }
         ?>        
@@ -45,6 +50,10 @@
 
             <label>Posição: </label>   
             <input type="text" name="posicao"><br><br>
+
+            <label>Posição: </label>   
+            <input type="radio" name="pe" value="Direita">Destro
+            <input type="radio" name="pe" value="Esquerda">Canhoto<br><br>
 
             <label>Seleção: </label>   
             <select name="selecao" id="">
