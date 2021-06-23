@@ -16,12 +16,14 @@
         $resultado_user->bindParam(':id', $id, PDO::PARAM_INT);
         $resultado_user->execute();
 
-        $jogos = "SELECT SUM(jogos) AS num FROM temporada WHERE id_jogador = '$id'"; 
+        $jogos = "SELECT SUM(jogos) AS num, SUM(gols) AS gol, SUM(assistencias) AS assists FROM temporada WHERE id_jogador = '$id'"; 
         
         $qtdjogos = $conn->getConn()->prepare($jogos);
         $qtdjogos->execute();
 
-        echo "<p>Total na Carreira: $qtdjogos Jogos  |  289 Gols  |  89 Assistências</p>";
+        $jog = $qtdjogos->fetch(PDO::FETCH_ASSOC);
+
+        echo "<p>Total na Carreira: $jog[num] Jogos  |  $jog[gol] Gols  |  $jog[assists] Assistências</p>";
         
         while ($dados = $resultado_user->fetch(PDO::FETCH_ASSOC)){
            
